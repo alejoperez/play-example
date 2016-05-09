@@ -32,7 +32,7 @@ public class SessionController extends Controller {
         this.sessionLogic = sessionLogic;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @BodyParser.Of(LoginRequest.LoginBodyParser.class)
     public Result login() {
         Http.RequestBody body = request().body();

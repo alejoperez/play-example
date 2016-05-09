@@ -1,7 +1,6 @@
 package controllers;
 
 import business.users.IUsersLogic;
-import dtos.users.UserDTO;
 import models.entities.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
