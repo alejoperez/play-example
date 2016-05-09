@@ -4,6 +4,8 @@ import business.session.ISessionLogic;
 import dtos.session.LoginDTO;
 import dtos.session.LogoutDTO;
 import dtos.session.RegisterDTO;
+import models.enums.UserTypeEnum;
+import models.entities.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -21,6 +23,7 @@ public class SessionController extends Controller {
 
     public static final String USER_ID = "user_id";
     public static final long NOT_LOGGED = -1L;
+    public static final String USER_TYPE = "user_type";
 
     private final ISessionLogic sessionLogic;
 
@@ -40,7 +43,7 @@ public class SessionController extends Controller {
             LoginDTO loginDTO = sessionLogic.login(loginRequest);
 
             if (loginDTO.isSuccess()) {
-                saveDataSession(loginDTO.getUser().getId());
+                saveDataSession(loginDTO.getUser());
                 return ok(Json.toJson(loginDTO));
             }
 
@@ -60,7 +63,7 @@ public class SessionController extends Controller {
             RegisterDTO registerDTO = sessionLogic.register(registerRequest);
 
             if (registerDTO.isSuccess()) {
-                saveDataSession(registerDTO.getUser().getId());
+                saveDataSession(registerDTO.getUser());
                 return ok(Json.toJson(registerDTO));
             }
         }
@@ -76,9 +79,14 @@ public class SessionController extends Controller {
     }
 
 
-    private void saveDataSession(Long id) {
+    private void saveDataSession(User user) {
         session().clear();
-        session().put(USER_ID,id.toString());
+        session().put(USER_ID,user.getId().toString());
+        session().put(USER_TYPE,user.getUserType());
+    }
+
+    public static boolean isLoggedUserType(UserTypeEnum userTypeEnum) {
+        return userTypeEnum.equalsName(session().get(USER_TYPE));
     }
 
     public static boolean isLoggedUser() {

@@ -3,7 +3,7 @@ package business.session;
 import dtos.session.LoginDTO;
 import dtos.session.LogoutDTO;
 import dtos.session.RegisterDTO;
-import models.UserTypeEnum;
+import models.enums.UserTypeEnum;
 import models.entities.User;
 import play.db.jpa.JPAApi;
 import requests.session.LoginRequest;

@@ -15,3 +15,9 @@ POST    /logout                     controllers.SessionController.logout
 
 # Users
 GET    /users/:page/:pageSize       controllers.UsersController.getUsers(page: Int,pageSize: Int)
+
+# Products
+GET    /products                    controllers.ProductsController.getProducts
+POST   /product                     controllers.ProductsController.createProduct
+PUT    /product/:id                 controllers.ProductsController.updateProduct(id: Long)
+DELETE /product/:id                 controllers.ProductsController.deleteProduct(id: Long)

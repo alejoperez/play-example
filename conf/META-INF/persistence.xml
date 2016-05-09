@@ -8,6 +8,7 @@
         <non-jta-data-source>DefaultDS</non-jta-data-source>
 
         <class>models.entities.User</class>
+        <class>models.entities.Product</class>
 
         <properties>
             <property name="hibernate.show_sql" value="false"/>

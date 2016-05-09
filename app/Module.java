@@ -1,3 +1,5 @@
+import business.products.IProductsLogic;
+import business.products.ProductsLogic;
 import business.session.ISessionLogic;
 import business.session.SessionLogic;
 import business.users.IUsersLogic;
@@ -31,6 +33,7 @@ public class Module extends AbstractModule {
         // Business Logic
         bind(ISessionLogic.class).to(SessionLogic.class);
         bind(IUsersLogic.class).to(UsersLogic.class);
+        bind(IProductsLogic.class).to(ProductsLogic.class);
     }
 
 }
