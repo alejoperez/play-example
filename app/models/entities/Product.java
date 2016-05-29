@@ -1,6 +1,7 @@
 package models.entities;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @NamedQueries({
@@ -23,6 +24,7 @@ public class Product {
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
+    public static final String IMAGE_URL = "image_url";
 
     @Id
     @GeneratedValue
@@ -36,6 +38,12 @@ public class Product {
 
     @Column(name = PRICE)
     private Double price;
+
+    @Column(name = IMAGE_URL)
+    private String imageUrl;
+
+    @Transient
+    private String base64Image;
 
     public Product() {
     }
@@ -76,5 +84,25 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
+    }
+
+    public String getFileName () {
+        return UUID.randomUUID().toString();
     }
 }

@@ -18,14 +18,16 @@ public class ProductRequest {
     private String name;
     private String description;
     private Double price;
+    private String base64Image;
 
     public ProductRequest() {
     }
 
-    public ProductRequest(String name, String description, Double price) {
+    public ProductRequest(String name, String description, Double price, String base64Image) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.base64Image = base64Image;
     }
 
     public String getName() {
@@ -52,10 +54,19 @@ public class ProductRequest {
         this.price = price;
     }
 
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
+    }
+
     public boolean isValid() {
         return !StringHelper.isEmpty(name)
                 && !StringHelper.isEmpty(description)
-                && price != 0D;
+                && price != 0D
+                && !StringHelper.isEmpty(base64Image);
     }
 
     public static class ProductBodyParser implements BodyParser<ProductRequest> {

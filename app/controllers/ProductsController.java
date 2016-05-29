@@ -5,6 +5,9 @@ import dtos.products.DeleteProductDTO;
 import dtos.products.UpdateProductDTO;
 import models.entities.Product;
 import models.enums.UserTypeEnum;
+import play.api.GlobalSettings$;
+import play.api.Play;
+import play.api.PlayConfig;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -51,7 +54,8 @@ public class ProductsController extends Controller {
         && SessionController.isLoggedUserType(UserTypeEnum.ADMIN)) {
 
             if (productRequest.isValid()) {
-                Product product = productsLogic.createProduct(productRequest);
+
+                Product product = productsLogic.createProduct(play.Play.application().configuration(),productRequest);
                 return ok(Json.toJson(product));
             }
             return badRequest();

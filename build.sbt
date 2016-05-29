@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   javaJpa,
   "mysql" % "mysql-connector-java" % "5.1.38",
   "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final"
+  "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final",
+  "com.amazonaws" % "aws-java-sdk" % "1.3.11"
 )
 
 PlayKeys.externalizeResources := false

@@ -29,8 +29,10 @@ public class Module extends AbstractModule {
         // application starts.
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
+        bindBusinessLogic();
+    }
 
-        // Business Logic
+    private void bindBusinessLogic() {
         bind(ISessionLogic.class).to(SessionLogic.class);
         bind(IUsersLogic.class).to(UsersLogic.class);
         bind(IProductsLogic.class).to(ProductsLogic.class);

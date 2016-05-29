@@ -1,14 +1,19 @@
 package business.products;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import dtos.products.DeleteProductDTO;
 import dtos.products.UpdateProductDTO;
 import models.entities.Product;
+import play.Configuration;
 import play.db.jpa.JPAApi;
 import requests.products.ProductRequest;
+import s3.S3Manager;
+import util.ImageUtil;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.persistence.Query;
+import java.io.*;
 import java.util.List;
 
 @Singleton
@@ -29,12 +34,20 @@ public class ProductsLogic implements IProductsLogic {
     }
 
     @Override
-    public Product createProduct(ProductRequest productRequest) {
+    public Product createProduct(Configuration configuration,ProductRequest productRequest) {
         Product product = new Product(
                 productRequest.getName(),
                 productRequest.getDescription(),
                 productRequest.getPrice()
         );
+
+        byte[] imageByteArray = ImageUtil.getByteArrayFromBase64(productRequest.getBase64Image());
+        ObjectMetadata metadata = ImageUtil.getMetadata(imageByteArray);
+        InputStream inputStream = ImageUtil.getInputStreamFromByteArray(imageByteArray);
+
+        S3Manager.getInstance(configuration).saveFile(product.getFileName(),inputStream,metadata);
+
+        product.setImageUrl(S3Manager.getS3ImageUrl(product.getFileName()));
 
         jpaApi.em().persist(product);
 
